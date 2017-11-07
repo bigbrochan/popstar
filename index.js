@@ -489,7 +489,10 @@ window.onload = function() {
                 if (view.model.uset.allSingle()) {
                     var remain = Object.keys(view.nodes).length
                     view.score.remain = remain
-                    EventBus.emit(view, 'levelDone', view)
+                    view.parent.classList.add('level-done')
+                    setTimeout(function() {
+                        EventBus.emit(view, 'levelDone', view)
+                    })
                 }
             }
 
@@ -542,24 +545,21 @@ window.onload = function() {
             function levelDone(view) {
                 view.score.levelDone = true
                 var nodes = view.nodes
-                view.parent.classList.toggle('level-done')
+                for (var key in nodes) {
+                    var left = nodes[key].style.left
+                    left = +left.substr(0, left.length - 1) - 100 + '%'
+                    nodes[key].style.left = left
+                }
                 setTimeout(function() {
-                    for (var key in nodes) {
-                        var left = nodes[key].style.left
-                        left = +left.substr(0, left.length - 1) - 100 + '%'
-                        nodes[key].style.left = left
+                    view.parent.classList.remove('level-done')
+                    if (view.score.score >= view.score.goal) {
+                        EventBus.emit(view, 'levelUp', view, view.score.level + 1)
+                    } else {
+                        EventBus.emit(view, 'gameover', view)
                     }
-                    setTimeout(function() {
-                        view.parent.classList.toggle('level-done')
-                        console.log('next-level!')
-                        if (view.score.score >= view.score.goal) {
-                            EventBus.emit(view, 'levelUp', view, view.score.level + 1)
-                        } else {
-                            EventBus.emit(view, 'gameover', view)
-                        }
 
-                    }, 2000)
-                }, 0)
+                }, 2000)
+
 
 
 
