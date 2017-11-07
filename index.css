@@ -213,22 +213,25 @@ body {
 }
 
 .game-page .success-show {
-    left: 25%;
-    width: 50%;
-    height: 10%;
-    transition: all 0.3s linear;
+    width: 40%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 0.5rem;
+    transition: all 0.2s linear;
 }
 
 .success {
-    background: url(./imgsrc/success.jpg) no-repeat;
-    background-size: cover;
     z-index: 100;
     position: fixed;
-    left: 25%;
+    left: 30%;
     top: 25%;
     width: 0;
     height: 0;
-    border-radius: 40%;
+    font-size: 0;
+    line-height: 0;
+    text-align: center;
+    color: yellow;
+    font-weight: bold;
 }
 
 .gameover {
