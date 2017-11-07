@@ -1,0 +1,308 @@
+@keyframes shrink {
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 0
+    }
+}
+
+html {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    background-color: red;
+    height: 100%;
+    position: relative;
+}
+
+.nav-page {
+    width: 7.5rem;
+    height: 100%;
+    background-color: teal;
+    background-image: url(./imgsrc/navbg.jpg);
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.record {
+    width: 6rem;
+    height: 1rem;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.record>span {
+    display: inline-block;
+    width: 2.5rem;
+    height: 0.7rem;
+    font-size: 40px;
+    line-height: 0.7rem;
+    font-weight: bold;
+}
+
+.max-count {
+    background-color: orange;
+    border-radius: 10% 12%;
+    color: white;
+    text-align: center;
+}
+
+.record-text {
+    text-align: right;
+    color: yellow;
+}
+
+.logo {
+    width: 7.5rem;
+    height: 3.7rem;
+    background-image: url(./imgsrc/log.jpg);
+    background-repeat: no-repeat;
+    background-size: 7.5rem 3.7rem;
+}
+
+.nav {
+    flex-grow: 1;
+    display: flex;
+    width: 3rem;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav button {
+    width: 100%;
+    height: 1.5rem;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    background-color: orange;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.game-page {
+    width: 7.5rem;
+    height: 100%;
+    background: url(./imgsrc/gamebg.jpg) no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+
+.game-data {
+    font-size: 40px;
+    font-weight: bold;
+    color: yellow;
+    width: 80%;
+    margin: 0 auto;
+    height: 1rem;
+    line-height: 1rem;
+}
+
+.level {
+    display: inline-block;
+    height: 100%;
+    width: 2.5rem;
+}
+
+.need {
+    display: inline-block;
+    height: 100%;
+    width: 2.5rem;
+}
+
+.score-data {
+
+    font-weight: bold;
+    text-align: center;
+}
+
+.score-data div {
+    height: 0.5rem;
+    line-height: 0.5rem;
+}
+
+.score-add {
+    color: white;
+    font-size: 30px;
+    opacity: 0
+}
+
+.clear-show {
+    opacity: 1;
+    transition: opacity 0.3s linear
+}
+
+.extra-score {
+    color: white;
+    font-size: 30px;
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
+.score,
+.remain,
+.add-score,
+.clear-amount,
+.bonus-mark {
+
+    color: yellow;
+    font-size: 40px;
+}
+
+.stars {
+    margin-top: 0.2rem;
+    width: 7.5rem;
+    height: 7.5rem;
+    position: relative;
+    font-size: 0;
+    /*display: none;*/
+}
+
+.stars span {
+    position: absolute;
+    background-color: silver;
+    border-radius: 25%;
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    transition: bottom 0.2s linear, left 0.2s linear;
+}
+
+.game-page .level-done span {
+    transition: left 2s linear
+}
+
+.selected {
+    animation-name: shrink;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.green {
+    background-image: url(./imgsrc/green.jpg);
+}
+
+.red {
+    background-image: url(./imgsrc/red.jpg);
+}
+
+.yellow {
+    background-image: url(./imgsrc/yellow.jpg);
+}
+
+.purple {
+    background-image: url(./imgsrc/purple.jpg);
+}
+
+.blue {
+    background-image: url(./imgsrc/blue.jpg);
+}
+
+.game-page .success-show {
+    left: 25%;
+    width: 50%;
+    height: 10%;
+    transition: all 0.3s linear;
+}
+
+.success {
+    background: url(./imgsrc/success.jpg) no-repeat;
+    background-size: cover;
+    z-index: 100;
+    position: fixed;
+    left: 25%;
+    top: 25%;
+    width: 0;
+    height: 0;
+    border-radius: 40%;
+}
+
+.gameover {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(230, 230, 230, 0.4);
+}
+
+.game-page .gameover-show {
+    display: block;
+}
+
+.gameover .wrapper {
+    position: absolute;
+    width: 4rem;
+    height: 5rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    background: url(./imgsrc/gameover.jpg) no-repeat;
+    background-size: 100% 100%;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15%
+}
+
+.wrapper h1 {
+    width: 2.5rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.5rem;
+    color: yellow;
+}
+
+.wrapper button {
+    background-color: grey;
+    border: none;
+    outline: none;
+    width: 1.8rem;
+    height: 0.6rem;
+    font-size: 0.2rem;
+    line-height: 0.6rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 50%
+}
+
+.score-detail {
+    width: 2rem;
+    height: 1.5rem;
+    border-radius: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 0.15rem;
+    font-weight: bold;
+    color: white;
+}
+
+.score-detail span {
+    font-size: 0.2rem;
+    color: yellow;
+    font-style: italic;
+}

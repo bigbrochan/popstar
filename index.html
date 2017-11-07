@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>消灭星星-POPSTAR！</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="nav-page">
+        <div class="record">
+            <span class="record-text">最新纪录：</span>
+            <span class="max-count">1000</span>
+        </div>
+        <div class="logo"></div>
+        <div class="nav">
+            <button class="game-start">开始游戏</button>
+        </div>
+    </div>
+    <div class="game-page">
+        <div class="game-data">
+            <span class="level-text level">关卡: <span class="level-data"></span></span>
+            <span class="need need-text">目标: <span class="need-data"></span></span>
+        </div>
+        <div class="score-data">
+            <div class="score">400</div>
+            <div class="score-add">
+                <span class="clear-amount"></span>连消<span class="add-score"></span>分
+            </div>
+            <div class="extra-score">
+                剩余<span class="remain">10</span>个,奖励<span class="bonus-mark"></span>分
+            </div>
+        </div>
+        <div class="success"></div>
+        <div class="stars">
+        </div>
+        <div class="gameover">
+            <div class="wrapper">
+                <h1>游戏结束!</h1>
+                <div class="score-detail">
+                    <div>
+                        纪录: <span>40000</span>
+                    </div>
+                    <div>
+                        关卡：<span class="game-level">15</span>
+                    </div>
+                    <div>
+                        得分：<span class="game-score">37500</span>
+                    </div>
+                </div>
+                <button class="restart">再来一局</button>
+                <button class="back-menu">返回菜单</button>
+            </div>
+        </div>
+    </div>
+    <script src='./hammer.min.js'></script>
+    <script src='./index.js'></script>
+</body>
+
+</html>
