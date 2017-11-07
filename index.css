@@ -20,7 +20,6 @@ body {
 .nav-page {
     width: 7.5rem;
     height: 100%;
-    background-color: teal;
     background-image: url(./imgsrc/navbg.jpg);
     background-repeat: no-repeat;
     -webkit-background-size: 100% 100%;
