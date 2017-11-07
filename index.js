@@ -196,7 +196,10 @@ window.onload = function() {
             this._remain = initalScore.remain
             this._bonus = initalScore.bonus
             this._score = initalScore.score
-            this.success = initalScore.success
+            this.success = initalScore.isSuccess
+            this.goodDOM = document.querySelector(initalScore.goodDOM)
+            this.betterDOM = document.querySelector(initalScore.betterDOM)
+            this.bestDOM = document.querySelector(initalScore.bestDOM)
             this.successDOM = document.querySelector(initalScore.successDOM)
             this.levelDOM = document.querySelector(initalScore.levelDOM)
             this.goalDOM = document.querySelector(initalScore.goalDOM)
@@ -221,6 +224,9 @@ window.onload = function() {
             EventBus.on(this, 'clear', setClear)
             EventBus.on(this, 'score', setScore)
             EventBus.on(this, 'success', setSuccess)
+            EventBus.on(this, 'good', setGood)
+            EventBus.on(this, 'better', setBetter)
+            EventBus.on(this, 'best', setBest)
             var self = this
 
             function setSuccess() {
@@ -228,9 +234,28 @@ window.onload = function() {
                 self.successDOM.classList.toggle('success-show')
                 setTimeout(function() {
                     self.successDOM.classList.toggle('success-show')
+                }, 500)
+            }
+            function setGood() {
+                self.goodDOM.classList.toggle('good-show')
+                setTimeout(function() {
+                    self.goodDOM.classList.toggle('good-show')
+                }, 500)
+            }
+            function setBetter() {
+                self.better = true
+                self.betterDOM.classList.toggle('better-show')
+                setTimeout(function() {
+                    self.betterDOM.classList.toggle('better-show')
                 }, 1000)
             }
-
+            function setBest() {
+                self.best = true
+                self.bestDOM.classList.toggle('best-show')
+                setTimeout(function() {
+                    self.bestDOM.classList.toggle('best-show')
+                }, 500)
+            }
             function setLevel(level) {
                 self.levelDOM.innerHTML = level
             }
@@ -253,8 +278,17 @@ window.onload = function() {
             }
 
             function setClear(n) {
-                self.clearAmountDOM.innerHTML = n
-                var s = n * n * 5
+            	var s = n * n * 5
+            	if(n>5&&n<10) {
+            		EventBus.emit(self, 'good')
+            	}
+            	if(n>=10&&n<15) {
+            		EventBus.emit(self, 'better')
+            	}
+            	if(n>=15){
+            		EventBus.emit(self, 'best')
+            	}
+                self.clearAmountDOM.innerHTML = n        
                 self.clearScoreDOM.innerHTML = s
                 self.score = self.score + s
                 self.clearScoreDOM.parentNode.classList.toggle('clear-show')
@@ -527,16 +561,13 @@ window.onload = function() {
                         }
                     }
                     for (var key in map) {
-
                         var node = view.nodes[key],
                             left = node.style.left
                         var xpos = 100 / view.model.x
                         left = +left.substr(0, left.length - 1) - xpos * map[key]
                         node.style.left = left + '%'
-                        console.log('node')
                     }
                 }
-
                 setTimeout(function() {
                     EventBus.emit(view, 'changeModel', view, moveData)
                 }, 200)
@@ -589,7 +620,7 @@ window.onload = function() {
             good: '好!',
             better: '太酷!',
             best: '暴走!',
-            success: false,
+            isSuccess: false,
             levelDOM: '.level-data',
             goalDOM: '.need-data',
             remainDOM: '.remain',
@@ -597,7 +628,10 @@ window.onload = function() {
             scoreDOM: '.score',
             clearAmountDOM: '.clear-amount',
             clearScoreDOM: '.add-score',
-            successDOM: '.success'
+            successDOM: '.success',
+            goodDOM: '.good',
+            betterDOM: '.better',
+            bestDOM: '.best'
         },
         starData: {
             colors: ['blue', 'red', 'green', 'yellow', 'purple'],
@@ -616,7 +650,7 @@ window.onload = function() {
         var restartDOM = document.querySelector('.restart')
         var backDOM = document.querySelector('.back-menu')
         var menuPage = document.querySelector('.nav-page')
-        var gameStart = document.querySelector('.game-start')
+        var gameStart = document.querySelector('.nav-start')
         if (game && e.target.parentNode === game.view.parent && game.view.tappable) {
             EventBus.emit(game.view, 'clear', game.view, e.target.etag)
         }
