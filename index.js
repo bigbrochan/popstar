@@ -1,9 +1,4 @@
-(function() {
-	//响应式代码---------------------------------------------------------------------------------
-    var dpr = window.devicePixelRatio
-    var meta = document.querySelector('meta[name="viewport"]')
-    meta.setAttribute('content', `initial-scale=${1/dpr},maximum-scale=${1/dpr},user-scalable=0`)
-    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+window.onload=function() {
     //并查集的类-----------------------------------------------------------------------------------
     //包含set,group(根与集合下标的数组组成的键值对)
     class Uset {
@@ -628,7 +623,7 @@
             game.view.gameover.classList.remove('gameover-show')
             game = new App(data)
         }
-        if (e.target === backDOM) {  
+        if (e.target === backDOM) {
             game.view.gameover.classList.remove('gameover-show')
             menuPage.classList.remove('hidden')
             game = null
@@ -638,4 +633,4 @@
             game = new App(data)
         }
     })
-})()
+}

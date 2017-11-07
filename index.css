@@ -13,7 +13,6 @@ html {
 
 body {
     margin: 0;
-    background-color: red;
     height: 100%;
     position: relative;
 }
@@ -45,7 +44,7 @@ body {
     display: inline-block;
     width: 2.5rem;
     height: 0.7rem;
-    font-size: 40px;
+    font-size: 0.5rem;
     line-height: 0.7rem;
     font-weight: bold;
 }
@@ -73,7 +72,7 @@ body {
 .nav {
     flex-grow: 1;
     display: flex;
-    width: 3rem;
+    width: 4rem;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -81,12 +80,13 @@ body {
 
 .nav button {
     width: 100%;
-    height: 1.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
     border: none;
     border-radius: 50%;
     outline: none;
     background-color: orange;
-    font-size: 40px;
+    font-size: 0.5rem;
     font-weight: bold;
     color: white;
 }
@@ -104,7 +104,7 @@ body {
 }
 
 .game-data {
-    font-size: 40px;
+    font-size: 0.4rem;
     font-weight: bold;
     color: yellow;
     width: 80%;
@@ -138,7 +138,7 @@ body {
 
 .score-add {
     color: white;
-    font-size: 30px;
+    font-size: 0.4rem;
     opacity: 0
 }
 
@@ -149,7 +149,7 @@ body {
 
 .extra-score {
     color: white;
-    font-size: 30px;
+    font-size: 0.4rem;
     opacity: 0;
     transition: opacity 1s linear;
 }
@@ -159,9 +159,8 @@ body {
 .add-score,
 .clear-amount,
 .bonus-mark {
-
     color: yellow;
-    font-size: 40px;
+    font-size: 0.4rem;
 }
 
 .stars {
@@ -170,7 +169,6 @@ body {
     height: 7.5rem;
     position: relative;
     font-size: 0;
-    /*display: none;*/
 }
 
 .stars span {
@@ -240,7 +238,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(230, 230, 230, 0.4);
+    background-color: rgba(230, 230, 230, 0.8);
 }
 
 .game-page .gameover-show {
@@ -249,8 +247,8 @@ body {
 
 .gameover .wrapper {
     position: absolute;
-    width: 4rem;
-    height: 5rem;
+    width: 5rem;
+    height: 6rem;
     top: 0;
     bottom: 0;
     left: 0;
@@ -259,7 +257,7 @@ body {
     text-align: center;
     background: url(./imgsrc/gameover.jpg) no-repeat;
     background-size: 100% 100%;
-    font-size: 30px;
+    font-size: 0.4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -279,30 +277,30 @@ body {
     background-color: grey;
     border: none;
     outline: none;
-    width: 1.8rem;
-    height: 0.6rem;
-    font-size: 0.2rem;
-    line-height: 0.6rem;
+    width: 3rem;
+    height: 1.5rem;
+    font-size: 0.4rem;
+    line-height: 1.5rem;
     font-weight: bold;
     color: white;
     border-radius: 50%
 }
 
 .score-detail {
-    width: 2rem;
+    width: 3rem;
     height: 1.5rem;
     border-radius: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    font-size: 0.15rem;
+    font-size: 0.3rem;
     font-weight: bold;
     color: white;
 }
 
 .score-detail span {
-    font-size: 0.2rem;
+    font-size: 0.3rem;
     color: yellow;
     font-style: italic;
 }
