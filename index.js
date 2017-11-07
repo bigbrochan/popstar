@@ -1,4 +1,4 @@
-function newgame() {
+(function() {
 	//响应式代码---------------------------------------------------------------------------------
     var dpr = window.devicePixelRatio
     var meta = document.querySelector('meta[name="viewport"]')
@@ -628,15 +628,14 @@ function newgame() {
             game.view.gameover.classList.remove('gameover-show')
             game = new App(data)
         }
-        if (e.target === backDOM) {
-            game = null
+        if (e.target === backDOM) {  
             game.view.gameover.classList.remove('gameover-show')
             menuPage.classList.remove('hidden')
+            game = null
         }
         if (e.target === gameStart) {
             menuPage.classList.add('hidden')
             game = new App(data)
         }
     })
-}
-window.onload = newgame
+})()
