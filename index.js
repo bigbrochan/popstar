@@ -549,17 +549,18 @@ window.onload = function() {
                         left = +left.substr(0, left.length - 1) - 100 + '%'
                         nodes[key].style.left = left
                     }
-                }, 0)
-                setTimeout(function() {
-                    view.parent.classList.toggle('level-done')
-                    console.log('next-level!')
-                    if (view.score.score >= view.score.goal) {
-                        EventBus.emit(view, 'levelUp', view, view.score.level + 1)
-                    } else {
-                        EventBus.emit(view, 'gameover', view)
-                    }
+                    setTimeout(function() {
+                        view.parent.classList.toggle('level-done')
+                        console.log('next-level!')
+                        if (view.score.score >= view.score.goal) {
+                            EventBus.emit(view, 'levelUp', view, view.score.level + 1)
+                        } else {
+                            EventBus.emit(view, 'gameover', view)
+                        }
 
-                }, 2000)
+                    }, 2000)
+                }, 0)
+
 
 
             }
