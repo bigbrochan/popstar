@@ -234,14 +234,16 @@ window.onload = function() {
                 self.successDOM.classList.toggle('success-show')
                 setTimeout(function() {
                     self.successDOM.classList.toggle('success-show')
-                }, 500)
+                }, 1000)
             }
+
             function setGood() {
                 self.goodDOM.classList.toggle('good-show')
                 setTimeout(function() {
                     self.goodDOM.classList.toggle('good-show')
-                }, 500)
+                }, 1000)
             }
+
             function setBetter() {
                 self.better = true
                 self.betterDOM.classList.toggle('better-show')
@@ -249,13 +251,15 @@ window.onload = function() {
                     self.betterDOM.classList.toggle('better-show')
                 }, 1000)
             }
+
             function setBest() {
                 self.best = true
                 self.bestDOM.classList.toggle('best-show')
                 setTimeout(function() {
                     self.bestDOM.classList.toggle('best-show')
-                }, 500)
+                }, 1000)
             }
+
             function setLevel(level) {
                 self.levelDOM.innerHTML = level
             }
@@ -278,17 +282,17 @@ window.onload = function() {
             }
 
             function setClear(n) {
-            	var s = n * n * 5
-            	if(n>5&&n<10) {
-            		EventBus.emit(self, 'good')
-            	}
-            	if(n>=10&&n<15) {
-            		EventBus.emit(self, 'better')
-            	}
-            	if(n>=15){
-            		EventBus.emit(self, 'best')
-            	}
-                self.clearAmountDOM.innerHTML = n        
+                var s = n * n * 5
+                if (n > 5 && n < 10) {
+                    EventBus.emit(self, 'good')
+                }
+                if (n >= 10 && n < 15) {
+                    EventBus.emit(self, 'better')
+                }
+                if (n >= 15) {
+                    EventBus.emit(self, 'best')
+                }
+                self.clearAmountDOM.innerHTML = n
                 self.clearScoreDOM.innerHTML = s
                 self.score = self.score + s
                 self.clearScoreDOM.parentNode.classList.toggle('clear-show')
