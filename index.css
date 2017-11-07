@@ -138,7 +138,7 @@ body {
 
 .score-add {
     color: white;
-    font-size: 0.4rem;
+    font-size: 0.3rem;
     opacity: 0
 }
 
@@ -149,7 +149,7 @@ body {
 
 .extra-score {
     color: white;
-    font-size: 0.4rem;
+    font-size: 0.3rem;
     opacity: 0;
     transition: opacity 1s linear;
 }

@@ -1,4 +1,4 @@
-window.onload=function() {
+window.onload = function() {
     //并查集的类-----------------------------------------------------------------------------------
     //包含set,group(根与集合下标的数组组成的键值对)
     class Uset {
@@ -626,11 +626,13 @@ window.onload=function() {
         if (e.target === backDOM) {
             game.view.gameover.classList.remove('gameover-show')
             menuPage.classList.remove('hidden')
+            game.view.parent.parentNode.classList.add('hidden')
             game = null
         }
         if (e.target === gameStart) {
             menuPage.classList.add('hidden')
             game = new App(data)
+            game.view.parent.parentNode.classList.remove('hidden')
         }
     })
 }
