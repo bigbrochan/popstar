@@ -203,7 +203,6 @@ body {
 .good,
 .better,
 .best {
-    border: 1px solid;
     background-size: 100% 100%;
     z-index: 100;
     position: fixed;
