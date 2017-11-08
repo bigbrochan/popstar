@@ -194,8 +194,8 @@ body {
 .game-page .good-show,
 .game-page .better-show,
 .game-page .best-show {
-    width: 40%;
-    height: 2rem;
+    width: 4rem;
+    height: 3rem;
     transition: all 0.2s linear;
 }
 
@@ -203,6 +203,7 @@ body {
 .good,
 .better,
 .best {
+    border: 1px solid;
     background-size: 100% 100%;
     z-index: 100;
     position: fixed;
@@ -214,18 +215,22 @@ body {
 
 .success {
     background: url(./imgsrc/success.png) no-repeat;
+    background-size: 100% 100%;
 }
 
 .good {
     background: url(./imgsrc/good.png) no-repeat;
+    background-size: 100% 100%;
 }
 
 .better {
     background: url(./imgsrc/better.png) no-repeat;
+    background-size: 100% 100%;
 }
 
 .best {
     background: url(./imgsrc/best.png) no-repeat;
+    background-size: 100% 100%;
 }
 
 .gameover {
@@ -300,4 +305,20 @@ body {
     height: 0.4rem;
     background: url(./imgsrc/detialbg.png) no-repeat;
     background-size: 100% 100%;
+}
+
+.back-logo,
+.reflesh {
+    position: fixed;
+    width: 1rem;
+    height: 1rem;
+    bottom: 0;
+}
+
+.back-logo {
+    right: 0;
+}
+
+.reflesh {
+    left: 0;
 }

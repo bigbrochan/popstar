@@ -112,14 +112,14 @@ window.onload = function() {
     }
     //--------------------------------------------------------------------------------------------
     //游戏数据的类--------------------------------------------------------------------------------
-    //包含data二维数组，x,y,colors,uset
+    //包含data二维数组,x,y,colors,uset
     class Stars extends Emitter {
-        constructor(starData) {
+        constructor(app, useLocal) {
             super()
-            this.colors = starData.colors.slice()
-            this.x = starData.x
-            this.y = starData.y
-            this.init()
+            this.colors = app.starData.colors.slice()
+            this.x = app.starData.x
+            this.y = app.starData.y
+            useLocal ? this.data = JSON.parse(JSON.stringify(app.local.matrix)) : this.init()
             this.usetfy()
         }
 
@@ -150,10 +150,12 @@ window.onload = function() {
                 ary.push(Stars.getRandomIndex(this.colors.length))
             }
             this.data = Stars.matrix(ary)
-
+            console.log()
             return this
         }
 
+        //遍历二维数组,把相邻的值相同的放入一个集合
+        //这个方法是这个游戏逻辑算法中最基础也是最重要的算法。。。lol.....-----
         usetfy() {
             var x = this.x,
                 y = this.y
@@ -184,19 +186,23 @@ window.onload = function() {
     //包含level(关卡)，goal(目标)，currScore(当前积分)，bonus(奖励积分),remain(剩余多少个)
     //继承自Emitter
     class Score extends Emitter {
-        constructor(initalScore) {
+        constructor(app, useLocal) {
             super()
-            this.init(initalScore)
+            this.init(app, useLocal)
             this.bind()
             this.gameover = false
         }
-        init(initalScore) {
-            this._level = initalScore.level
-            this._goal = initalScore.goal
+        init(app, useLocal) {
+            var initalScore = app.initialScore
+            var local = app.local
+            this._record = initalScore.record
+            this._level = useLocal ? local.level : initalScore.level
+            this._goal = useLocal ? local.goal : initalScore.goal
             this._remain = initalScore.remain
             this._bonus = initalScore.bonus
-            this._score = initalScore.score
-            this.success = initalScore.isSuccess
+            this._score = useLocal ? local.score : initalScore.score
+            this.success = useLocal ? local.success : initalScore.isSuccess
+            this.recordDOM = document.querySelectorAll(initalScore.recordDOM)
             this.goodDOM = document.querySelector(initalScore.goodDOM)
             this.betterDOM = document.querySelector(initalScore.betterDOM)
             this.bestDOM = document.querySelector(initalScore.bestDOM)
@@ -208,11 +214,11 @@ window.onload = function() {
             this.scoreDOM = document.querySelector(initalScore.scoreDOM)
             this.clearAmountDOM = document.querySelector(initalScore.clearAmountDOM)
             this.clearScoreDOM = document.querySelector(initalScore.clearScoreDOM)
-            this.levelDOM.innerHTML = initalScore.level
-            this.goalDOM.innerHTML = initalScore.goal
+            this.levelDOM.innerHTML = this._level
+            this.goalDOM.innerHTML = this._goal
             this.remainDOM.innerHTML = initalScore.remain
             this.bonusDOM.innerHTML = initalScore.bonus
-            this.scoreDOM.innerHTML = initalScore.score
+            this.scoreDOM.innerHTML = this._score
             this.clearAmountDOM.innerHTML = 0
             this.clearScoreDOM.innerHTML = 0
         }
@@ -227,7 +233,14 @@ window.onload = function() {
             EventBus.on(this, 'good', setGood)
             EventBus.on(this, 'better', setBetter)
             EventBus.on(this, 'best', setBest)
+            EventBus.on(this, 'record', setRecord)
             var self = this
+
+            function setRecord(r) {
+                self.recordDOM.forEach(dom => {
+                    dom.innerHTML = r
+                })
+            }
 
             function setSuccess() {
                 self.success = true
@@ -305,6 +318,13 @@ window.onload = function() {
                 self.scoreDOM.innerHTML = s
             }
         }
+        get record() {
+            return this._record
+        }
+        set record(r) {
+            this._record = r
+            EventBus.emit(this, 'record', r)
+        }
         get level() {
             return this._level
         }
@@ -358,8 +378,9 @@ window.onload = function() {
     //视图控制器的类------------------------------------------------------------------------------
     //包含nodes,parent,model,
     class View extends Emitter {
-        constructor(model, score, viewData) {
+        constructor(model, score, app) {
             super()
+            var viewData = app.viewData
             this.parent = document.querySelector(viewData.parent)
             this.gameover = document.querySelector(viewData.gameover)
             this.model = model
@@ -370,6 +391,7 @@ window.onload = function() {
         }
 
         init() {
+            this.parent.innerHTML = ''
             this.nodes = {}
             this.tappable = true
             var src = this.model.colors
@@ -547,6 +569,7 @@ window.onload = function() {
                 view.score.gameover = true
                 view.gameover.querySelector('.game-level').innerHTML = view.score.level
                 view.gameover.querySelector('.game-score').innerHTML = view.score.score
+
             }
 
             //星星向左移动动画----------------------
@@ -590,6 +613,7 @@ window.onload = function() {
                     if (view.score.score >= view.score.goal) {
                         EventBus.emit(view, 'levelUp', view, view.score.level + 1)
                     } else {
+                        (view.score.score > view.score.record) && (view.score.record = view.score.score)
                         EventBus.emit(view, 'gameover', view)
                     }
 
@@ -606,16 +630,30 @@ window.onload = function() {
 
     //-------------------游戏的类，new App(data)开启游戏------------------------------------------
     class App {
-        constructor(app) {
-            this.star = new Stars(app.starData)
-            this.score = new Score(app.initialScore)
-            this.view = new View(this.star, this.score, app.viewData)
+        constructor(app, useLocal) {
+            this.star = new Stars(app, useLocal)
+            this.score = new Score(app, useLocal)
+            this.view = new View(this.star, this.score, app)
         }
     }
     //--------------------------------------------------------------------------------------------
     //游戏初始化数据
+    var game
+    var initialLocal = {
+        level: 1,
+        goal: 1000,
+        score: 0,
+        isSuccess: false,
+        matrix: null,
+        record: 0,
+        isOver: true
+    }
+    var localJSON = window.localStorage.getItem('popstar')
+    var popstar = JSON.parse(localJSON)
+    popstar = popstar ? popstar : initialLocal
     var data = {
         initialScore: {
+            record: this.local ? this.local.record : 0,
             level: 1,
             goal: 1000,
             remain: 100,
@@ -635,34 +673,59 @@ window.onload = function() {
             successDOM: '.success',
             goodDOM: '.good',
             betterDOM: '.better',
-            bestDOM: '.best'
+            bestDOM: '.best',
+            recordDOM: '.record-text'
         },
         starData: {
             colors: ['blue', 'red', 'green', 'yellow', 'purple'],
             x: 10,
             y: 10,
+            matrix: null,
         },
         viewData: {
             parent: '.stars',
             gameover: '.gameover'
-        }
+        },
+        local: JSON.parse(JSON.stringify(popstar))
     }
 
-    var game
+
+
+    function setLocalStorage(view, isOver) {
+
+        popstar.level = view.score.level,
+            popstar.goal = view.score.goal,
+            popstar.score = view.score.score,
+            popstar.isSuccess = view.score.success,
+            popstar.record = view.score.record,
+            popstar.isOver = isOver,
+            popstar.matrix = JSON.parse(JSON.stringify(view.model.data))
+        data.local = JSON.parse(JSON.stringify(popstar))
+
+        var json = JSON.stringify(popstar)
+        window.localStorage.setItem('popstar', json)
+    }
+
+    document.querySelectorAll(data.initialScore.recordDOM).forEach(dom => {
+        dom.innerHTML = popstar.record
+    })
     var hammertime = new Hammer(document.body)
     hammertime.on('tap', function(e) {
-        var restartDOM = document.querySelector('.restart')
-        var backDOM = document.querySelector('.back-menu')
+        var restartDOM = [].slice.call(document.querySelectorAll('.newgame'))
+        var backDOM = [].slice.call(document.querySelectorAll('.back-home'))
         var menuPage = document.querySelector('.nav-page')
         var gameStart = document.querySelector('.nav-start')
+        var gameContinue = document.querySelector('.nav-continue')
         if (game && e.target.parentNode === game.view.parent && game.view.tappable) {
             EventBus.emit(game.view, 'clear', game.view, e.target.etag)
         }
-        if (e.target === restartDOM) {
+        if (restartDOM.indexOf(e.target) > -1) {
             game.view.gameover.classList.remove('gameover-show')
-            game = new App(data)
+            game = new App(data, false)
         }
-        if (e.target === backDOM) {
+        if (backDOM.indexOf(e.target) > -1) {
+
+            setLocalStorage(game.view, game.view.score.gameover)
             game.view.gameover.classList.remove('gameover-show')
             menuPage.classList.remove('hidden')
             game.view.parent.parentNode.classList.add('hidden')
@@ -670,7 +733,16 @@ window.onload = function() {
         }
         if (e.target === gameStart) {
             menuPage.classList.add('hidden')
-            game = new App(data)
+            game = new App(data, false)
+            game.view.parent.parentNode.classList.remove('hidden')
+        }
+        if (e.target === gameContinue) {
+            menuPage.classList.add('hidden')
+            if (data.local.isOver) {
+                game = new App(data, false)
+            } else {
+                game = new App(data, true)
+            }
             game.view.parent.parentNode.classList.remove('hidden')
         }
     })
