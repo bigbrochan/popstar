@@ -195,7 +195,7 @@ window.onload = function() {
         init(app, useLocal) {
             var initalScore = app.initialScore
             var local = app.local
-            this._record = initalScore.record
+            this._record = local.record
             this._level = useLocal ? local.level : initalScore.level
             this._goal = useLocal ? local.goal : initalScore.goal
             this._remain = initalScore.remain
